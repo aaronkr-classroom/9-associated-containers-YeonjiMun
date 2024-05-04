@@ -1,4 +1,4 @@
-//xref.cpp
+//chp7ex8.cpp
 #include <iostream>
 #include <string>
 #include <vector>
@@ -11,7 +11,7 @@ using namespace std;
 //입력에서 각 단어가 등장한 모든 행을 찾음
 map<string, vector<int> >xref(
 	istream& in,
-	vector<string> find_words(const string&) = split) 
+	vector<string> find_words(const string&) = split)
 {
 	string line;
 	int line_num = 0;
@@ -22,7 +22,7 @@ map<string, vector<int> >xref(
 		++line_num;
 
 		//입력한 행을 단어로 나눔
-		vector<string> words = find_words(line);
+		vector<string> words = find_urls(line);
 
 		//현재 행에 등장한 모든 단어를 저장
 		for (vector<string>::const_iterator it = words.begin();

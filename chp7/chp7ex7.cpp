@@ -1,4 +1,4 @@
-//xref.cpp
+//chp7ex7.cpp
 #include <iostream>
 #include <string>
 #include <vector>
@@ -11,29 +11,33 @@ using namespace std;
 //입력에서 각 단어가 등장한 모든 행을 찾음
 map<string, vector<int> >xref(
 	istream& in,
-	vector<string> find_words(const string&) = split) 
+	vector<string> find_words(const string&) = split)
 {
 	string line;
+
 	int line_num = 0;
 	map<string, vector<int> > ret;
 
-	//다음 행을 읽음
-	while (getline(in, line)) {
-		++line_num;
+		//다음 행을 읽음
+		while (getline(in, line)) {
+			++line_num;
 
-		//입력한 행을 단어로 나눔
-		vector<string> words = find_words(line);
+			//입력한 행을 단어로 나눔
+			vector<string> words = find_words(line);
 
-		//현재 행에 등장한 모든 단어를 저장
-		for (vector<string>::const_iterator it = words.begin();
-			it != words.end(); ++it) {
-			ret[*it].push_back(line_num);
+			//현재 행에 등장한 모든 단어를 저장
+			for (vector<string>::const_iterator it = words.begin();
+				it != words.end(); ++it) {
+
+				if (find(ret[*it].begin(), ret[*it].end(), line_num) == ret[*it].end()) {
+					ret[*it].push_back(line_num);
+				}
+			}
 		}
+		return ret;
 	}
-	return ret;
-}
-
-int main() {
+	
+	int main() {
 	//기본 인수인 split 함수를 사용하여 xref함수를 호출
 	map<string, vector<int> > ret = xref(cin);
 
@@ -42,6 +46,8 @@ int main() {
 		it != ret.end(); ++it) {
 		//단어를 출력
 		cout << "\"" << it->first << "\" is on line(s): ";
+
+		cout << ((it->second.size() == 1) ? "line: " : "lines: ");
 
 		//이어서 하나 이상의 행 번호를 출력
 		vector<int>::const_iterator line_it = it->second.begin();
